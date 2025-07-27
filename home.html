@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وب‌سایت شخصی | داریوش ثابت</title>
+    <link id="favicon" rel="icon" type="image/png" href="">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Vazirmatn for Persian) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* اعمال فونت و استایل‌های پایه */
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #000000; /* پس‌زمینه مشکی */
+            color: #f5f5f5; /* رنگ متن سفید */
+            overflow-x: hidden;
+        }
+
+        /* پس‌زمینه متحرک */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Preloader / Boot Sequence */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            color: #0f0;
+            transition: opacity 0.5s ease-out;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #boot-text {
+            white-space: pre;
+            font-size: 1rem;
+        }
+
+        /* استایل کارت‌های شیشه‌ای */
+        .glass-card {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* انیمیشن ظاهر شدن */
+        .fade-in-up-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in-up-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Timeline Style */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -9px;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 3px solid;
+            background-color: #000;
+            z-index: 1;
+        }
+        .timeline-item.red::before { border-color: #ef4444; }
+        .timeline-item.blue::before { border-color: #3b82f6; }
+        .timeline-item.yellow::before { border-color: #facc15; }
+
+        /* Article Modal Style & Custom Scrollbar */
+        #article-modal {
+            transition: opacity 0.3s ease;
+        }
+        #article-modal-content {
+            transition: transform 0.3s ease;
+        }
+        #modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        #modal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #modal-body::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.7);
+            border-radius: 6px;
+        }
+        #modal-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.9);
+        }
+        #modal-body img {
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        #modal-body pre {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* Skills Progress Bar */
+        .progress-bar-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            border-radius: 9999px;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+    </style>
+</head>
+<body class="antialiased opacity-0 transition-opacity duration-500">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="boot-text"></div>
+    </div>
+
+    <!-- Background Animation -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-black/60 backdrop-blur-md border-b border-gray-800">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="#">داریوش ثابت</a>
+            </div>
+            <div class="hidden md:flex space-x-6 space-x-reverse text-base">
+                <a href="#about" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">درباره من</a>
+                <a href="#skills" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">مهارت‌ها</a>
+                <a href="#projects" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">پروژه‌ها</a>
+                <a href="#tech-stack" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">ابزارها</a>
+                <a href="#articles" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">نوشته‌ها</a>
+                <a href="#contact" class="text-gray-300 hover:text-white font-medium transition-colors duration-300">تماس</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 relative z-10">
+
+        <!-- Hero Section -->
+        <section class="min-h-[90vh] flex flex-col md:flex-row items-center justify-center text-center md:text-right">
+            <div class="md:w-3/5">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                    مهندس الکترونیک و
+                    <br>
+                    <span id="typed-text"></span>
+                </h1>
+                <p class="mt-6 text-lg text-gray-400 max-w-xl mx-auto md:mx-0">
+                    تبدیل ایده‌های پیچیده به راه‌حل‌های عملی و کارآمد در دنیای سخت‌افزار و نرم‌افزار.
+                </p>
+                <div class="mt-10 flex justify-center md:justify-start">
+                    <a href="#projects" class="border-2 border-white text-white font-bold px-8 py-3 rounded-lg hover:bg-white hover:text-black transition-colors duration-300">
+                        مشاهده پروژه‌ها
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-2/5 flex justify-center mt-12 md:mt-0">
+                <div class="relative w-64 h-64 md:w-80 md:h-80">
+                    <img src="https://placehold.co/400x400/000000/ffffff?text=Your+Photo" alt="عکس پروفایل" class="relative z-10 rounded-full object-cover border-4 border-gray-700">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24 fade-in-up-section">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">مسیر من</h2>
+            <div class="w-24 h-1 bg-red-500 mx-auto mb-12 rounded-full"></div>
+            <div class="glass-card p-8 md:p-12 max-w-4xl mx-auto">
+                <div class="text-lg text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-12">
+                    <p>
+                        همیشه مجذوب این بودم که چطور جریان نامرئی الکتریسیته می‌تواند به منطق و عملکرد تبدیل شود. این کنجکاوی مرا به دنیای مهندسی الکترونیک کشاند و در این مسیر، دریافتم که قدرت واقعی در تلفیق سخت‌افزار با نرم‌افزار نهفته است.
+                    </p>
+                </div>
+                <div class="relative max-w-lg mx-auto">
+                    <div class="absolute top-0 h-full w-0.5 bg-gray-700 right-0"></div>
+                    <div class="relative timeline-item red pr-8 mb-10">
+                        <h4 class="font-bold text-xl text-red-400">شروع تحصیل</h4>
+                        <p class="text-gray-400">ورود به رشته مهندسی الکترونیک و آغاز ماجراجویی.</p>
+                    </div>
+                    <div class="relative timeline-item blue pr-8 mb-10">
+                        <h4 class="font-bold text-xl text-blue-400">اولین پروژه IoT</h4>
+                        <p class="text-gray-400">ساخت یک سیستم هوشمند و درک قدرت اتصال سخت‌افزار به اینترنت.</p>
+                    </div>
+                    <div class="relative timeline-item yellow pr-8">
+                        <h4 class="font-bold text-xl text-yellow-400">یادگیری پایتون</h4>
+                        <p class="text-gray-400">ورود به دنیای نرم‌افزار برای تحلیل داده‌ها و کنترل سیستم‌ها.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section - Progress Bars -->
+        <section id="skills" class="py-24 fade-in-up-section">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">مهارت‌های کلیدی</h2>
+            <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded-full"></div>
+            <div class="glass-card p-8 md:p-12 max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Hardware Skills -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-blue-400 text-center">طراحی سخت‌افزار</h3>
+                        <div class="skill-item">
+                            <p class="mb-2">طراحی PCB (Altium)</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-blue-500" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p class="mb-2">مدارهای آنالوگ</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-blue-500" data-width="75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p class="mb-2">مدارهای دیجیتال</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-blue-500" data-width="95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Embedded Systems Skills -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-red-400 text-center">سیستم‌های نهفته</h3>
+                        <div class="skill-item">
+                            <p class="mb-2">برنامه‌نویسی C/C++</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-red-500" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p class="mb-2">اینترنت اشیاء (IoT)</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-red-500" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p class="mb-2">میکروکنترلرهای ARM/AVR</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-red-500" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Software Skills -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 text-center">توسعه نرم‌افزار</h3>
+                        <div class="skill-item">
+                            <p class="mb-2">Python</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-yellow-500" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p class="mb-2">JavaScript</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-yellow-500" data-width="70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p class="mb-2">Git & Version Control</p>
+                            <div class="progress-bar-container h-3">
+                                <div class="progress-bar bg-yellow-500" data-width="90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 fade-in-up-section">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">پروژه‌های منتخب</h2>
+            <div class="w-24 h-1 bg-yellow-400 mx-auto mb-12 rounded-full"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1: 3D Viewer -->
+                <div class="group block">
+                    <div class="glass-card overflow-hidden transition-all duration-300 group-hover:border-red-500 group-hover:-translate-y-2">
+                        <div id="3d-viewer" class="w-full h-48 cursor-move"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white">مدل سه‌بعدی قطعه</h3>
+                            <p class="text-gray-400 mt-2">یک نمونه طراحی سه‌بعدی (با ماوس بچرخانید).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <a href="#" class="group block">
+                    <div class="glass-card overflow-hidden transition-all duration-300 group-hover:border-blue-500 group-hover:-translate-y-2">
+                        <img src="https://placehold.co/600x400/3b82f6/000000?text=Project+2" alt="تصویر پروژه" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white">ایستگاه هواشناسی IoT</h3>
+                            <p class="text-gray-400 mt-2">با استفاده از ESP32 و پروتکل MQTT.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 3 -->
+                <a href="#" class="group block">
+                    <div class="glass-card overflow-hidden transition-all duration-300 group-hover:border-yellow-500 group-hover:-translate-y-2">
+                        <img src="https://placehold.co/600x400/facc15/000000?text=Project+3" alt="تصویر پروژه" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white">تحلیلگر طیف صوتی</h3>
+                            <p class="text-gray-400 mt-2">با پایتون و الگوریتم FFT.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Tech Stack Section -->
+        <section id="tech-stack" class="py-24 fade-in-up-section">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">ابزارها و تکنولوژی‌ها</h2>
+            <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded-full"></div>
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Python -->
+                    <div class="glass-card p-6 text-center flex flex-col items-center gap-4 hover:border-yellow-400">
+                        <i class="fab fa-python text-6xl text-yellow-400"></i>
+                        <div>
+                            <h4 class="text-xl font-bold">Python</h4>
+                            <p class="text-xs text-gray-400 mt-2">برای اسکریپت‌نویسی و تحلیل داده.</p>
+                        </div>
+                    </div>
+                    <!-- Go -->
+                    <div class="glass-card p-6 text-center flex flex-col items-center gap-4 hover:border-cyan-400">
+                        <i class="fab fa-golang text-6xl text-cyan-400"></i>
+                        <div>
+                            <h4 class="text-xl font-bold">Go</h4>
+                            <p class="text-xs text-gray-400 mt-2">برای ساخت ابزارهای سمت سرور.</p>
+                        </div>
+                    </div>
+                    <!-- Linux -->
+                    <div class="glass-card p-6 text-center flex flex-col items-center gap-4 hover:border-white">
+                        <i class="fab fa-linux text-6xl text-white"></i>
+                        <div>
+                            <h4 class="text-xl font-bold">Linux</h4>
+                            <p class="text-xs text-gray-400 mt-2">محیط اصلی توسعه من.</p>
+                        </div>
+                    </div>
+                    <!-- JavaScript -->
+                    <div class="glass-card p-6 text-center flex flex-col items-center gap-4 hover:border-yellow-300">
+                        <i class="fab fa-js text-6xl text-yellow-300"></i>
+                        <div>
+                            <h4 class="text-xl font-bold">JavaScript</h4>
+                            <p class="text-xs text-gray-400 mt-2">برای تعامل‌پذیری در وب.</p>
+                        </div>
+                    </div>
+                    <!-- Arduino -->
+                    <div class="glass-card p-6 text-center flex flex-col items-center gap-4 hover:border-teal-400">
+                        <i class="fab fa-arduino text-6xl text-teal-400"></i>
+                        <div>
+                            <h4 class="text-xl font-bold">Arduino</h4>
+                            <p class="text-xs text-gray-400 mt-2">قلب تپنده پروژه‌های سخت‌افزاری.</p>
+                        </div>
+                    </div>
+                     <!-- C++ -->
+                    <div class="glass-card p-6 text-center flex flex-col items-center gap-4 hover:border-blue-400">
+                        <i class="fab fa-cuttlefish text-6xl text-blue-400"></i>
+                        <div>
+                            <h4 class="text-xl font-bold">C++</h4>
+                            <p class="text-xs text-gray-400 mt-2">برای برنامه‌نویسی میکروکنترلرها.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section id="articles" class="py-24 fade-in-up-section">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">نوشته‌های فنی</h2>
+            <div class="w-24 h-1 bg-red-500 mx-auto mb-12 rounded-full"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card p-6 flex flex-col justify-between cursor-pointer hover:border-red-500" onclick="openArticleModal(0)">
+                    <h3 class="text-xl font-bold text-white">مقایسه AVR و ARM</h3>
+                    <p class="text-gray-400 mt-2 text-sm">نگاهی عمیق به دو معماری محبوب در دنیای سیستم‌های نهفته.</p>
+                    <span class="text-red-400 mt-4 font-semibold">بیشتر بخوانید...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 fade-in-up-section">
+            <h2 class="text-4xl font-bold text-center text-white mb-4">تماس و همکاری</h2>
+             <div class="w-24 h-1 bg-gray-500 mx-auto mb-12 rounded-full"></div>
+            <div class="glass-card max-w-2xl mx-auto p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-white mb-2">بیایید صحبت کنیم!</h3>
+                    <p class="text-gray-400 leading-relaxed max-w-lg mx-auto mb-6">
+                        از طریق فرم زیر یا شبکه‌های اجتماعی با من در تماس باشید.
+                    </p>
+                </div>
+                <form action="#" method="POST">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <input type="text" placeholder="نام" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-red-500 transition-colors">
+                        <input type="email" placeholder="ایمیل" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                    </div>
+                    <div class="mb-6">
+                        <textarea placeholder="پیام شما..." rows="4" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 transition-colors"></textarea>
+                    </div>
+                    <button type="submit" class="w-full border-2 border-white text-white font-bold px-8 py-3 rounded-lg hover:bg-white hover:text-black transition-colors duration-300">ارسال پیام</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/50 border-t border-gray-800 mt-12">
+        <div class="container mx-auto px-6 py-8 text-center">
+             <div class="flex justify-center space-x-6 space-x-reverse text-2xl mb-4">
+                <a href="https://github.com/ImSabetDariush" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/imsabetdariush/" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors duration-300"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:darius.sabet976@gmail.com" class="text-gray-400 hover:text-red-400 transition-colors duration-300"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm">
+                &copy; <span id="year"></span> | طراحی و ساخت توسط داریوش ثابت.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="fixed inset-0 bg-black bg-opacity-70 z-[999] flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div id="article-modal-content" class="glass-card max-w-3xl w-full p-8 rounded-2xl transform scale-95">
+            <h2 id="modal-title" class="text-3xl font-bold text-white mb-4"></h2>
+            <div id="modal-body" class="text-gray-300 leading-relaxed max-h-[60vh] overflow-y-auto pr-2"></div>
+            <button onclick="closeArticleModal()" class="mt-6 border-2 border-white text-white font-bold px-6 py-2 rounded-lg hover:bg-white hover:text-black transition-colors duration-300">بستن</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Boot Sequence ---
+            const preloader = document.getElementById('preloader');
+            const bootTextEl = document.getElementById('boot-text');
+            const bootLines = [
+                'System Booting...', 'Initializing Kernel...', 'Loading UI Modules... [OK]',
+                'Checking Hardware... [OK]', 'Establishing Quantum Link... [CONNECTED]', 'Welcome, User.'
+            ];
+            let bootLineIndex = 0;
+            function typeBootLine() {
+                if (bootLineIndex < bootLines.length) {
+                    bootTextEl.textContent += bootLines[bootLineIndex] + '\n';
+                    bootLineIndex++;
+                    setTimeout(typeBootLine, Math.random() * 200 + 50);
+                } else {
+                    setTimeout(() => {
+                        preloader.classList.add('loaded');
+                        document.body.classList.add('opacity-100');
+                    }, 500);
+                }
+            }
+            typeBootLine();
+
+            // --- Particles.js Background ---
+            particlesJS('particles-js', {
+                "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#ffffff" }, "shape": { "type": "circle" }, "opacity": { "value": 0.2, "random": true }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.05, "width": 1 }, "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out" } },
+                "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": false }, "resize": true }, "modes": { "repulse": { "distance": 100, "duration": 0.4 } } },
+                "retina_detect": true
+            });
+
+            // --- Typed.js Initialization ---
+            const accentColors = ['#ef4444', '#3b82f6', '#facc15'];
+            let colorIndex = 0;
+            const typedTextSpan = document.getElementById('typed-text');
+            new Typed('#typed-text', {
+                strings: ['توسعه‌دهنده نرم‌افزار.', 'طراح سیستم‌های نهفته.', 'حل‌کننده مسائل فنی.'],
+                typeSpeed: 60, backSpeed: 30, loop: true, smartBackspace: true,
+                preStringTyped: (arrayPos, self) => {
+                    colorIndex = arrayPos % accentColors.length;
+                    typedTextSpan.style.color = accentColors[colorIndex];
+                },
+            });
+
+            // --- 3D Model Viewer ---
+            const scene = new THREE.Scene();
+            const container = document.getElementById('3d-viewer');
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+            const material = new THREE.MeshNormalMaterial();
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            camera.position.z = 3;
+
+            function animate3D() {
+                requestAnimationFrame(animate3D);
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.005;
+                renderer.render(scene, camera);
+            }
+            animate3D();
+            
+            let isMouseDown = false, mouseX = 0, mouseY = 0;
+            container.addEventListener('mousedown', e => { isMouseDown = true; });
+            container.addEventListener('mouseup', e => { isMouseDown = false; });
+            container.addEventListener('mousemove', e => {
+                if (isMouseDown) {
+                    cube.rotation.y += (e.clientX - mouseX) * 0.01;
+                    cube.rotation.x += (e.clientY - mouseY) * 0.01;
+                }
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // --- Fade-in Animation on Scroll ---
+            const sections = document.querySelectorAll('.fade-in-up-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Animate progress bars when skills section is visible
+                        if (entry.target.id === 'skills') {
+                            document.querySelectorAll('.progress-bar').forEach(bar => {
+                                bar.style.width = bar.dataset.width;
+                            });
+                        }
+                    }
+                });
+            }, { threshold: 0.15 });
+            sections.forEach(section => { observer.observe(section); });
+
+            // --- Animated Favicon ---
+            const favicon = document.getElementById('favicon');
+            const faviCanvas = document.createElement('canvas');
+            faviCanvas.width = 32;
+            faviCanvas.height = 32;
+            const faviCtx = faviCanvas.getContext('2d');
+            let faviColorIndex = 0;
+            const faviColors = ['#ef4444', '#3b82f6', '#facc15', '#333'];
+            const wrenchPath = new Path2D('M31.6 13.2l-6-6c-1.2-1.2-3.1-1.2-4.2 0L12 16.6c-1.2 1.2-1.2 3.1 0 4.2l6 6c1.2 1.2 3.1 1.2 4.2 0l9.4-9.4c1.2-1.2 1.2-3.1 0-4.2zM21 14.4l-1.4-1.4 8.4-8.4 1.4 1.4-8.4 8.4zM4.2 29.8c-1.2-1.2-1.2-3.1 0-4.2l6-6c1.2-1.2 3.1-1.2 4.2 0l2.8 2.8-10 10-2.8-2.8c-1.1-1-1.1-2.9 0-4.1z');
+
+            setInterval(() => {
+                faviCtx.clearRect(0, 0, 32, 32);
+                faviCtx.fillStyle = faviColors[faviColorIndex];
+                faviCtx.save();
+                faviCtx.scale(0.8, 0.8); // Scale down to fit
+                faviCtx.translate(4, 4);
+                faviCtx.fill(wrenchPath);
+                faviCtx.restore();
+                favicon.href = faviCanvas.toDataURL('image/png');
+                faviColorIndex = (faviColorIndex + 1) % faviColors.length;
+            }, 700);
+
+            // --- Set current year in footer ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+
+        // --- Article Data and Modal Functions ---
+        const articles = [
+            {
+                title: 'مقایسه میکروکنترلرهای AVR و ARM',
+                content: `
+                    <p class="mb-4">در دنیای سیستم‌های نهفته، دو خانواده بزرگ از میکروکنترلرها یعنی AVR و ARM همواره مورد بحث و مقایسه قرار می‌گیرند. انتخاب بین این دو به نیازهای پروژه بستگی دارد.</p>
+                    <h3 class="text-xl font-bold text-yellow-400 my-4">معماری و پیچیدگی</h3>
+                    <p class="mb-4">میکروکنترلرهای AVR از معماری ۸ بیتی RISC ساده‌تری بهره می‌برند که یادگیری و کار با آن‌ها را آسان‌تر می‌کند. در مقابل، ARM با معماری ۳۲ بیتی خود، قدرت پردازش بسیار بالاتر و امکانات جانبی گسترده‌تری را ارائه می‌دهد.</p>
+                    <img src="https://placehold.co/600x300/111827/3b82f6?text=AVR+vs+ARM+Architecture" alt="نمودار معماری" class="w-full h-auto my-4 rounded-lg">
+                    <h3 class="text-xl font-bold text-yellow-400 my-4">نمونه کد راه‌اندازی GPIO در AVR</h3>
+                    <p class="mb-4">برای مثال، راه‌اندازی یک پین به عنوان خروجی در AVR به سادگی زیر است:</p>
+                    <pre><code class="language-c">#include &lt;avr/io.h&gt;
+#include &lt;util/delay.h&gt;
+
+int main(void) {
+    // Set Port B Pin 5 as output
+    DDRB |= (1 << DDB5);
+
+    while (1) {
+        // Toggle Port B Pin 5
+        PORTB ^= (1 << PORTB5);
+        _delay_ms(500);
+    }
+}</code></pre>
+                    <p class="mt-4">در نهایت، برای پروژه‌های کوچک و آموزشی، AVR یک انتخاب عالی است، در حالی که برای سیستم‌های پیچیده، پردازشی و مدرن، ARM حرف اول را می‌زند.</p>
+                `
+            }
+            // Add more article objects here
+        ];
+
+        const modal = document.getElementById('article-modal');
+        const modalContent = document.getElementById('article-modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        
+        window.openArticleModal = function(index) {
+            const article = articles[index];
+            if (!article) return;
+            
+            modalTitle.textContent = article.title;
+            modalBody.innerHTML = article.content;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+        }
+
+        window.closeArticleModal = function() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('pointer-events-none'), 300);
+        }
+    </script>
+
+</body>
+</html>
